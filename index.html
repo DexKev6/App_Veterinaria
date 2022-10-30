@@ -11,7 +11,7 @@
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">
         </script>
     <link rel="stylesheet" href="/Css/styles.css">
- <script src="Js/Mascotas.js"></script>
+
 </head>
 
 <body>
@@ -62,7 +62,9 @@
         </head>
         <!-- Fin navbar -->
 
+
         <div class="actions-menu">
+            <h1>Mascotas</h1>
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
                 data-bs-whatever="@mdo">Nuevo</button>
         </div>
@@ -75,48 +77,13 @@
                 <thead class="table-dark">
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">First</th>
-                        <th scope="col">Last</th>
-                        <th scope="col">Handle</th>
+                        <th scope="col">Tipo</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Dueñó </th>
                         <th scope="col"></th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                        <td>
-                            <div class="btn-group" role="group" aria-label="Basic example">
-                            <button type="button" class="btn btn-info">Editar</button>
-                            <button type="button" class="btn btn-danger">Eliminar</button>
-                          </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>@fat</td>
-                        <td>
-                            <div class="btn-group" role="group" aria-label="Basic example">
-                            <button type="button" class="btn btn-info">Editar</button>
-                            <button type="button" class="btn btn-danger">Eliminar</button>
-                          </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td colspan="2">Larry the Bird</td>
-                        <td>@twitter</td>
-                        <td>
-                            <div class="btn-group" role="group" aria-label="Basic example">
-                            <button type="button" class="btn btn-info">Editar</button>
-                            <button type="button" class="btn btn-danger">Eliminar</button>
-                          </div>
-                        </td>
-                    </tr>
+                <tbody id="lista-mascotas">
                 </tbody>
             </table>
         </div>
@@ -138,19 +105,20 @@
                                     <label class="visually-hidden" for="specificSizeSelect">Preference</label>
                                     <select class="form-select" id="specificSizeSelect">
                                         <option selected>Tipo de animal</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
+                                        <option value="1">Perro</option>
+                                        <option value="2">Gato</option>
+                                        <option value="3">Pajaro</option>
+                                        <option value="4">Otro</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col">
-                                    <input type="text" class="form-control" placeholder="First name"
+                                    <input type="text" name="nombre" class="form-control" placeholder="Nombre"
                                         aria-label="First name">
                                 </div>
                                 <div class="col">
-                                    <input type="text" class="form-control" placeholder="Last name"
+                                    <input type="text" name="dueno" class="form-control" placeholder="Dueño"
                                         aria-label="Last name">
                                 </div>
 
@@ -171,3 +139,5 @@
 </body>
 
 </html>
+<!-- SCRIPS -->
+<script src="Js/Mascotas.js"></script>

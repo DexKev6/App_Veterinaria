@@ -1,5 +1,5 @@
-const listaMacotas = document.getElementById('lista-mascotas');
-const tipo = document.getElementById('tipo');
+const listaVeterinarios = document.getElementById('lista-mascotas');
+//const tipo = document.getElementById('tipo');
 const nombre = document.getElementById('nombre');
 const dueno = document.getElementById('dueno');
 const indice = document.getElementById('indice');
@@ -37,7 +37,7 @@ function listarMacotas() {
                 </td>
             </tr>
         `).join("");
-        listaMacotas.innerHTML = htmlMascotas;
+        listaVeterinarios.innerHTML = htmlMascotas;
 
 
         Array.from(document.getElementsByClassName('editar')).forEach((botonEditar, index)=>botonEditar.onclick = editar(index))

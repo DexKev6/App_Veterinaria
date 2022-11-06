@@ -1,4 +1,4 @@
-const listaVeterinarios = document.getElementById('lista-mascotas');
+const listaVeterinarios = document.getElementById('lista-veterinarios');
 const nombre = document.getElementById('nombre');
 const apellido = document.getElementById('apellido');
 const identificacion = document.getElementById('identificacion');
@@ -9,27 +9,30 @@ const btnGuardar = document.getElementById('btn-guardar');
 //para evitar navegar al unidirle al input dentro de un formulario
 const form = document.getElementById('form');
 
-let mascotas = [
+let veterinarios = [
     {
-        tipo: "Gato",
-        nombre: "Manchas",
-        dueno: "Esteban"
+        nombre: "Kevin",
+        apellido: "Saldarrriaga",
+        identificacion: "1003302325",
+        pais: "Colombia"
     },
     {
-        tipo: "Perro",
-        nombre: "Firulais",
-        dueno: "Donchi"
+        nombre: "Naryvie",
+        apellido: "vasquez",
+        identificacion: "1023156151",
+        pais: "Colombia"
     }
 ];
 
-function listarMacotas() {
-    const htmlMascotas = mascotas.map((mascota, index) =>
+function listarVeterinarios() {
+    const htmlVeterinarios = veterinarios.map((veterinario, index) =>
         `
             <tr>
                 <th scope="row">${index}</th>
-                <td>${mascota.tipo}</td>
-                <td>${mascota.nombre}</td>
-                <td>${mascota.dueno}</td>
+                <td>${veterinario.nombre}</td>
+                <td>${veterinario.apellido}</td>
+                <td>${veterinario.identificacion}</td>
+                <td>${veterinario.pais}</td>
                 <td>
                     <div class="btn-group" role="group" aria-label="Basic example">
                     <button type="button" class="btn btn-info editar" data-bs-toggle="modal" data-bs-target="#exampleModal">Editar</button>
@@ -38,7 +41,7 @@ function listarMacotas() {
                 </td>
             </tr>
         `).join("");
-        listaVeterinarios.innerHTML = htmlMascotas;
+        listaVeterinarios.innerHTML = htmlVeterinarios;
 
 
         Array.from(document.getElementsByClassName('editar')).forEach((botonEditar, index)=>botonEditar.onclick = editar(index))
@@ -54,23 +57,24 @@ function listarMacotas() {
 function enviarDatos(evento){ //nomalmente se pone solo e
     evento.preventDefault();
     const datos = {
-        tipo: pais.value,
         nombre: nombre.value,
-        dueno: apellido.value
+        apellido: apellido.value,
+        identificacion: identificacion.value,
+        pais: pais.value,
     };
     const accion = btnGuardar.innerHTML;
    switch(accion){
     case 'Editar':
         //editar
-        mascotas[indice.value] = datos;
+        veterinarios[indice.value] = datos;
         break;
     default:
         //Crear
-        mascotas.push(datos);
+        veterinarios.push(datos);
         break;   
    }
     
-    listarMacotas();
+    listarVeterinarios();
     resetModal()
 }
 
@@ -83,11 +87,12 @@ function editar(index) {
         
         btnGuardar.innerHTML = 'Editar' 
         //$('#exampleModal').modal('toggle'); //funcionquery de bootstrap
-       const mascota = mascotas[index];
+       const veterinario = veterinarios[index];
        indice.value = index;
-       pais.value = mascota.tipo;
-       nombre.value = mascota.nombre;
-       apellido.value = mascota.dueno;
+       nombre.value = veterinario.nombre;
+       apellido.value = veterinario.apellido;
+       identificacion.value = veterinario.identificacion;
+       pais.value = veterinario.pais;
         
     }
     
@@ -96,9 +101,10 @@ function editar(index) {
 function resetModal(){
     
     indice.value = ''
-    pais.value = '';
     nombre.value = '';
     apellido.value = '';
+    identificacion.value = '';
+    pais.value = '';
     btnGuardar.innerHTML = 'Crear'
 }
 
@@ -106,13 +112,13 @@ function eliminar(index){
     return function clickElminiar(){
         // una fora de eliminar  delete mascotas[index];
 
-        mascotas = mascotas.filter((mascota, indiceMascota) => indiceMascota !== index);
-        listarMacotas()
+        veterinarios = veterinarios.filter((veterinario, indiceVeterinario) => indiceVeterinario !== index);
+        listarVeterinarios()
     }    
 
 }
 
-listarMacotas(); 
+listarVeterinarios(); 
 
 form.onsubmit = enviarDatos;
 btnGuardar.onclick = enviarDatos;

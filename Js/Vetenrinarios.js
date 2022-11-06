@@ -1,7 +1,8 @@
 const listaVeterinarios = document.getElementById('lista-mascotas');
-//const tipo = document.getElementById('tipo');
 const nombre = document.getElementById('nombre');
-const dueno = document.getElementById('dueno');
+const apellido = document.getElementById('apellido');
+const identificacion = document.getElementById('identificacion');
+const pais = document.getElementById('pais');
 const indice = document.getElementById('indice');
 //boton guardar
 const btnGuardar = document.getElementById('btn-guardar');
@@ -53,9 +54,9 @@ function listarMacotas() {
 function enviarDatos(evento){ //nomalmente se pone solo e
     evento.preventDefault();
     const datos = {
-        tipo: tipo.value,
+        tipo: pais.value,
         nombre: nombre.value,
-        dueno: dueno.value
+        dueno: apellido.value
     };
     const accion = btnGuardar.innerHTML;
    switch(accion){
@@ -84,9 +85,9 @@ function editar(index) {
         //$('#exampleModal').modal('toggle'); //funcionquery de bootstrap
        const mascota = mascotas[index];
        indice.value = index;
-       tipo.value = mascota.tipo;
+       pais.value = mascota.tipo;
        nombre.value = mascota.nombre;
-       dueno.value = mascota.dueno;
+       apellido.value = mascota.dueno;
         
     }
     
@@ -95,9 +96,9 @@ function editar(index) {
 function resetModal(){
     
     indice.value = ''
-    tipo.value = '';
+    pais.value = '';
     nombre.value = '';
-    dueno.value = '';
+    apellido.value = '';
     btnGuardar.innerHTML = 'Crear'
 }
 

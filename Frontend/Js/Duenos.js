@@ -1,78 +1,105 @@
-const listaDuenos = document.getElementById('lista-veterinarios');
+const listaDuenos = document.getElementById('lista-duenos');
 const nombre = document.getElementById('nombre');
 const apellido = document.getElementById('apellido');
-const identificacion = document.getElementById('identificacion');
-const pais = document.getElementById('pais');
+const documento = document.getElementById('documento');
+
 const indice = document.getElementById('indice');
 //boton guardar
 const btnGuardar = document.getElementById('btn-guardar');
 //para evitar navegar al unidirle al input dentro de un formulario
 const form = document.getElementById('form');
+const url = 'http://localhost:8000/duenos';
 
-let duenos = [
-    {
-        nombre: "Kevin",
-        apellido: "Saldarrriaga",
-        identificacion: "1003302325",
-        pais: "Colombia"
-    },
-    {
-        nombre: "Naryvie",
-        apellido: "vasquez",
-        identificacion: "1023156151",
-        pais: "Colombia"
-    }
-];
+let duenos = [];
 
-function listarDuenos() {
-    const htmlDuenos = duenos.map((dueno, index) =>
+async function listarDuenos() {
+    try {
+        const respuesta = await fetch(url)
+        const duenoDelServer = await respuesta.json();
+        if (Array.isArray(duenoDelServer)) {
+            duenos = duenoDelServer
+        }
+        if (duenos.length > 0){
+            const htmlDuenos = duenos.map((dueno, index) =>
+            `
+                <tr>
+                    <th scope="row">${index}</th>
+                    <td>${dueno.nombre}</td>
+                    <td>${dueno.apellido}</td>
+                    <td>${dueno.documento}</td>
+                    
+                    <td>
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                        <button type="button" class="btn btn-info editar" data-bs-toggle="modal" data-bs-target="#exampleModal">Editar</button>
+                         <button type="button" class="btn btn-danger eliminar">Eliminar</button>
+                        </div>
+                    </td>
+                </tr>
+            `).join("");
+            listaDuenos.innerHTML = htmlDuenos;
+    
+    
+            Array.from(document.getElementsByClassName('editar')).forEach((botonEditar, index)=>botonEditar.onclick = editar(index))
+            Array.from(document.getElementsByClassName('eliminar')).forEach((botonEliminar, index)=>botonEliminar.onclick = eliminar(index))
+            return;
+    
+        }
+        listaDuenos.innerHTML =`
+        <tr>
+            
+        <td colspan = "5" class="lista-vacia" >No hay Dueños</td>
+     
+    </tr>
         `
-            <tr>
-                <th scope="row">${index}</th>
-                <td>${dueno.nombre}</td>
-                <td>${dueno.apellido}</td>
-                <td>${dueno.identificacion}</td>
-                <td>${dueno.pais}</td>
-                <td>
-                    <div class="btn-group" role="group" aria-label="Basic example">
-                    <button type="button" class="btn btn-info editar" data-bs-toggle="modal" data-bs-target="#exampleModal">Editar</button>
-                     <button type="button" class="btn btn-danger eliminar">Eliminar</button>
-                    </div>
-                </td>
-            </tr>
-        `).join("");
-        listaDuenos.innerHTML = htmlDuenos;
+    } catch (error) {
+        console.log({ error });
+        //throw error
+        $(".alert").show(); //una vuelta con jquery
+    }
 
-
-        Array.from(document.getElementsByClassName('editar')).forEach((botonEditar, index)=>botonEditar.onclick = editar(index))
-        Array.from(document.getElementsByClassName('eliminar')).forEach((botonEliminar, index)=>botonEliminar.onclick = eliminar(index))
-
-
+  
 
 
 }
 
 //para evitar navegar al unidirle al input dentro de un formulario
 
-function enviarDatos(evento){ //nomalmente se pone solo e
+async function enviarDatos(evento){ //nomalmente se pone solo e
     evento.preventDefault();
-    const datos = {
-        nombre: nombre.value,
-        apellido: apellido.value,
-        identificacion: identificacion.value,
-        pais: pais.value,
-    };
-    const accion = btnGuardar.innerHTML;
-   switch(accion){
-    case 'Editar':
-        //editar
-        duenos[indice.value] = datos;
-        break;
-    default:
-        //Crear
-        duenos.push(datos);
-        break;   
-   }
+    try {
+        const datos = {
+            nombre: nombre.value,
+            apellido: apellido.value,
+            documento: documento.value,
+          
+        };
+        const accion = btnGuardar.innerHTML;
+        let urlEnvio = url
+        let method = 'POST';
+        if (accion === 'Editar') {
+            urlEnvio += `/${indice.value}`;  //otra forma que se hace
+            //editar
+            method = "PUT"
+        }
+        const respuesta = await fetch(urlEnvio, {
+            method,
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(datos),
+            mode: "cors",
+        })
+
+        if (respuesta.ok) {
+
+            listarDuenos();
+            resetModal()
+        }
+    } catch (error) {
+        console.log({ error });
+        $(".alert").show();
+    }
+    
     
     listarDuenos();
     resetModal()
@@ -91,8 +118,8 @@ function editar(index) {
        indice.value = index;
        nombre.value = dueno.nombre;
        apellido.value = dueno.apellido;
-       identificacion.value = dueno.identificacion;
-       pais.value = dueno.pais;
+       documento.value = dueno.documento;
+       
         
     }
     
@@ -103,19 +130,33 @@ function resetModal(){
     indice.value = ''
     nombre.value = '';
     apellido.value = '';
-    identificacion.value = '';
-    pais.value = '';
+    documento.value = '';
     btnGuardar.innerHTML = 'Crear'
 }
 
 function eliminar(index){
-    return function clickElminiar(){
-        // una fora de eliminar  delete mascotas[index];
+    const urlEnvio = `${url}/${index}`
+    return async function clickElminiar() {
 
-        duenos = duenos.filter((duenos, indiceDuenos) => indiceDuenos !== index);
-        listarDuenos()
-    }    
+        try {
+            const respuesta = await fetch(urlEnvio, {
+                method: 'DELETE',
+            })
 
+            if (respuesta.ok) {
+
+                listarDuenos();
+                resetModal()
+            }
+        } catch (error) {
+            console.log({ error });
+            $(".alert").show(); //una vuelta con jquery
+        }
+
+
+
+
+    }
 }
 
 listarDuenos(); 

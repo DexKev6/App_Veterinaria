@@ -54,7 +54,8 @@ async function listarMacotas() {
 
 
     } catch (error) {
-        $(".alert").show();
+      //throw error
+       $(".alert").show(); //una vuelta con jquery
     }
 
 

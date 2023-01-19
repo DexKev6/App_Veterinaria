@@ -7,43 +7,47 @@ const indice = document.getElementById('indice');
 const btnGuardar = document.getElementById('btn-guardar');
 //para evitar navegar al unidirle al input dentro de un formulario
 const form = document.getElementById('form');
+const url = 'http://localhost:8000/mascotas';
 
-let mascotas = [
-    {
-        tipo: "Gato",
-        nombre: "Manchas",
-        dueno: "Esteban"
-    },
-    {
-        tipo: "Perro",
-        nombre: "Firulais",
-        dueno: "Donchi"
-    }
-];
+let mascotas = [];
 
-function listarMacotas() {
-    solicitarMascotas();
-    const htmlMascotas = mascotas.map((mascota, index) =>
-        `
-            <tr>
-                <th scope="row">${index}</th>
-                <td>${mascota.tipo}</td>
-                <td>${mascota.nombre}</td>
-                <td>${mascota.dueno}</td>
-                <td>
-                    <div class="btn-group" role="group" aria-label="Basic example">
-                    <button type="button" class="btn btn-info editar" data-bs-toggle="modal" data-bs-target="#exampleModal">Editar</button>
-                     <button type="button" class="btn btn-danger eliminar">Eliminar</button>
-                    </div>
-                </td>
-            </tr>
-        `).join("");
+async function listarMacotas() {
+    try {
+
+        const respuesta = await fetch(url)
+        const mascotasDelServer = await respuesta.json();
+        if (Array.isArray(mascotasDelServer) && mascotasDelServer.length > 0) {
+            mascotas = mascotasDelServer
+        }
+
+        const htmlMascotas = mascotas.map((mascota, index) =>
+            `
+          <tr>
+              <th scope="row">${index}</th>
+              <td>${mascota.tipo}</td>
+              <td>${mascota.nombre}</td>
+              <td>${mascota.dueno}</td>
+              <td>
+                  <div class="btn-group" role="group" aria-label="Basic example">
+                  <button type="button" class="btn btn-info editar" data-bs-toggle="modal" data-bs-target="#exampleModal">Editar</button>
+                   <button type="button" class="btn btn-danger eliminar">Eliminar</button>
+                  </div>
+              </td>
+          </tr>
+      `).join("");
         listaMacotas.innerHTML = htmlMascotas;
 
 
-        Array.from(document.getElementsByClassName('editar')).forEach((botonEditar, index)=>botonEditar.onclick = editar(index))
-        Array.from(document.getElementsByClassName('eliminar')).forEach((botonEliminar, index)=>botonEliminar.onclick = eliminar(index))
+        Array.from(document.getElementsByClassName('editar')).forEach((botonEditar, index) => botonEditar.onclick = editar(index))
+        Array.from(document.getElementsByClassName('eliminar')).forEach((botonEliminar, index) => botonEliminar.onclick = eliminar(index))
 
+
+
+
+
+    } catch (error) {
+        throw error;
+    }
 
 
 
@@ -51,27 +55,47 @@ function listarMacotas() {
 
 //para evitar navegar al unidirle al input dentro de un formulario
 
-function enviarDatos(evento){ //nomalmente se pone solo e
+async function enviarDatos(evento) { //nomalmente se pone solo e
     evento.preventDefault();
-    const datos = {
-        tipo: tipo.value,
-        nombre: nombre.value,
-        dueno: dueno.value
-    };
-    const accion = btnGuardar.innerHTML;
-   switch(accion){
-    case 'Editar':
-        //editar
-        mascotas[indice.value] = datos;
-        break;
-    default:
-        //Crear
-        mascotas.push(datos);
-        break;   
-   }
-    
-    listarMacotas();
-    resetModal()
+
+    try {
+
+        const datos = {
+            tipo: tipo.value,
+            nombre: nombre.value,
+            dueno: dueno.value
+        };
+        let method = "POST";
+        let urlEnvio = url;
+        const accion = btnGuardar.innerHTML;
+        if (accion === "Editar") {
+            //editar
+            method = "PUT";
+            mascotas[indice.value] = datos;
+            urlEnvio = `${url}/${indice.value}`;
+
+        }
+
+        const respuesta = await fetch(urlEnvio, {
+            method,
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(datos),
+        })
+
+        if (respuesta.ok) {
+
+            listarMacotas();
+            resetModal()
+        }
+
+    } catch (error) {
+        throw error; //lanzar el error en la consola
+
+    }
+
+
 }
 
 //Guardar el estado
@@ -79,22 +103,22 @@ function enviarDatos(evento){ //nomalmente se pone solo e
 function editar(index) {
 
     //el handles se llama al dar click y se puede poner el nombre que queramos cambiar el handler por lo que sea
-    return function handler(){
-        
-        btnGuardar.innerHTML = 'Editar' 
+    return function handler() {
+
+        btnGuardar.innerHTML = 'Editar'
         //$('#exampleModal').modal('toggle'); //funcionquery de bootstrap
-       const mascota = mascotas[index];
-       indice.value = index;
-       tipo.value = mascota.tipo;
-       nombre.value = mascota.nombre;
-       dueno.value = mascota.dueno;
-        
+        const mascota = mascotas[index];
+        indice.value = index;
+        tipo.value = mascota.tipo;
+        nombre.value = mascota.nombre;
+        dueno.value = mascota.dueno;
+
     }
-    
+
 }
 
-function resetModal(){
-    
+function resetModal() {
+
     indice.value = ''
     tipo.value = '';
     nombre.value = '';
@@ -102,27 +126,27 @@ function resetModal(){
     btnGuardar.innerHTML = 'Crear'
 }
 
-function eliminar(index){
-    return function clickElminiar(){
-        // una fora de eliminar  delete mascotas[index];
+function eliminar(index) {
+    const urlEnvio = `${url}/${index}`
+    return async function clickElminiar() {
+    
+        const respuesta = await fetch(urlEnvio, {
+            method: 'DELETE',
+        })
 
-        mascotas = mascotas.filter((mascota, indiceMascota) => indiceMascota !== index);
-        listarMacotas()
-    }    
+        if (respuesta.ok) {
 
-}
+            listarMacotas();
+            resetModal()
+        }
 
-listarMacotas(); 
-
-function solicitarMascotas(){
-    fetch('http://localhost:8000/mascotas').then((respuesta)=> {
-    if(respuesta.ok){
-        return respuesta.json();
     }
-    }).then(mascotasDelServer => {
-        console.log({mascotasDelServer})
-    });
+
 }
+
+listarMacotas();
+
+
 
 form.onsubmit = enviarDatos;
 btnGuardar.onclick = enviarDatos;

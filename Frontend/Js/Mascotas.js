@@ -54,9 +54,9 @@ async function listarMacotas() {
 
 
     } catch (error) {
-        console.log({error});
-      //throw error
-       $(".alert").show(); //una vuelta con jquery
+        console.log({ error });
+        //throw error
+        $(".alert").show(); //una vuelta con jquery
     }
 
 
@@ -100,7 +100,7 @@ async function enviarDatos(evento) { //nomalmente se pone solo e
         }
 
     } catch (error) {
-        console.log({error});
+        console.log({ error });
         $(".alert").show(); //una vuelta con jquery
 
     }
@@ -152,7 +152,7 @@ function eliminar(index) {
             }
 
         } catch (error) {
-            console.log({error});
+            console.log({ error });
             $(".alert").show(); //una vuelta con jquery
         }
 

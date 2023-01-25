@@ -1,7 +1,13 @@
 const listaconsultas = document.getElementById("lista-consultas")
+const mascota = document.getElementById("mascota");
+const veterinaria = document.getElementById("veterinaria");
+
 
 let consultas = [];
-const url = 'http://localhost:8000/consultas';
+let mascotas = [];
+let veterinarias = [];
+
+const url = 'http://localhost:8000';
 
 /*{
       mascota: 0,
@@ -14,9 +20,10 @@ const url = 'http://localhost:8000/consultas';
     */
 
 async function listarConsultas() {
+    const entidad ='consultas' 
     try {
 
-        const respuesta = await fetch(url);
+        const respuesta = await fetch(`${url}/${entidad}`);
         const consultasDelServidor = await respuesta.json(); //await es promesa
 
         if (Array.isArray(consultasDelServidor)) {
@@ -53,3 +60,73 @@ async function listarConsultas() {
 }
 
 listarConsultas();
+
+async function listarMascotas() {
+    const entidad ='mascotas' 
+    try {
+
+        const respuesta = await fetch(`${url}/${entidad}`);
+        const mascotasDelServidor = await respuesta.json(); //await es promesa
+
+        if (Array.isArray(mascotasDelServidor)) {
+            mascotas = mascotasDelServidor;
+        }
+        if (respuesta.ok) {
+                 mascotas.forEach((_mascota, indice) => {
+                const optionActual = document.createElement("option");
+                optionActual.innerHTML = _mascota.nombre;
+                optionActual.value = indice;
+                mascota.appendChild(optionActual);
+            });
+
+        }
+
+        // if (respuesta.ok) {
+        //     const htmlMascotas = mascotas.map(
+        //         (mascota,indice) =>   {
+        //             `<option value="${indice}">${mascota.nombre}</option>`
+        //         }
+                    
+                
+        //     ).join("");
+        //     mascota.innerHTML += htmlMascotas;
+
+
+        // }
+
+
+    } catch (error) {
+        throw error
+    }
+}
+
+listarMascotas();
+
+
+async function listarVeterinarias() {
+    const entidad ='veterinarias' 
+    try {
+
+        const respuesta = await fetch(`${url}/${entidad}`);
+        const veterinariasDelServidor = await respuesta.json(); //await es promesa
+
+        if (Array.isArray(veterinariasDelServidor)) {
+            veterinarias = veterinariasDelServidor;
+        }
+        if (respuesta.ok) {
+            veterinarias.forEach((_veterinaria, indice) => {
+                const optionActual = document.createElement("option");
+                optionActual.innerHTML = `${_veterinaria.nombre} ${_veterinaria.apellido}`;
+                optionActual.value = indice;
+                veterinaria.appendChild(optionActual);
+            });
+
+        }
+
+
+    } catch (error) {
+        throw error
+    }
+}
+
+listarVeterinarias();

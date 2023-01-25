@@ -83,7 +83,7 @@
                     </tr>
                 </thead>
                 <tbody id="lista-consultas">
- 
+
                 </tbody>
             </table>
         </div>
@@ -103,24 +103,39 @@
                             <div class="row">
                                 <div class="col">
                                     <label class="visually-hidden" for="specificSizeSelect">Preference</label>
-                                    <select class="form-select" id="specificSizeSelect">
+                                    <select class="form-select" id="mascota">
                                         <option selected>Tipo de animal</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
+
                                     </select>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col">
-                                    <input type="text" class="form-control" placeholder="First name"
-                                        aria-label="First name">
+                                    <label class="visually-hidden" for="specificSizeSelect">Preference</label>
+                                    <select class="form-select" id="veterinaria">
+                                        <option selected>Selectione Veterinari@</option>
+
+                                    </select>
                                 </div>
+                            </div>
+                            <div class="row">
                                 <div class="col">
-                                    <input type="text" class="form-control" placeholder="Last name"
-                                        aria-label="Last name">
+                                    <textarea id="historia" class="form-control" placeholder="Historia"> </textarea>
                                 </div>
 
+                                <div class="row">
+                                    <div class="col">
+                                        <label class="visually-hidden" for="specificSizeSelect">Preference</label>
+                                        <select class="form-select" id="diagnostico">
+                                            <option selected>Selectione Diagnostico</option>
+                                            <option>Prudito de piel (sarna)</option>
+                                            <option>Moquillo</option>
+                                            <option>Trauma cefálico</option>
+                                            <option>Parvovirosis</option>
+
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                         </form>
                         <!-- Fin form -->
@@ -144,8 +159,10 @@
 <!-- Jquery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 
-<script src="./Js/consultas.js"></script> 
+<script src="./Js/consultas.js"></script>
 <!-- JavaScript Bundle with Popper -->
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+    crossorigin="anonymous"></script>
 <!-- connect jquery -->

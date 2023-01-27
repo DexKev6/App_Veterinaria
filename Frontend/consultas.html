@@ -99,7 +99,8 @@
                     </div>
                     <div class="modal-body">
                         <!-- Form -->
-                        <form>
+                        <form id="formulario" >
+                            <input type="hidden" id="indice" />
                             <div class="row">
                                 <div class="col">
                                     <label class="visually-hidden" for="specificSizeSelect">Preference</label>
@@ -142,7 +143,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Send message</button>
+                        <button type="button" class="btn btn-primary" id="btn-guardar">Crear</button>
                     </div>
                 </div>
             </div>

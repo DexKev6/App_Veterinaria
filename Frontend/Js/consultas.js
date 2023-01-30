@@ -59,7 +59,8 @@ async function listarConsultas() {
 
 
     } catch (error) {
-        throw error
+        console.log({ error });
+        $(".alert").show();
     }
 }
 
@@ -100,7 +101,8 @@ async function listarMascotas() {
 
 
     } catch (error) {
-        throw error
+        console.log({ error });
+        $(".alert").show();
     }
 }
 
@@ -128,7 +130,8 @@ async function listarVeterinarias() {
 
 
     } catch (error) {
-        throw error
+        console.log({ error });
+        $(".alert").show();
     }
 }
 
@@ -140,7 +143,7 @@ function resetModal() {
     historia.value = "";
     diagnostico.value = "";
     btnGuardar.innerHTML = 'Crear'
-    $('#exampleModal').modal('toggle');
+   // $('#exampleModal').modal('toggle');
 }
 
 
@@ -208,7 +211,8 @@ async function enviarDatos(evento) { //nomalmente se pone solo e
         alert ("formulario incompleto")
   
     } catch (error) {
-        throw (error)
+        console.log({ error });
+        $(".alert").show();
         //console.log({ error });
         //$(".alert").show();
     }
@@ -216,7 +220,7 @@ async function enviarDatos(evento) { //nomalmente se pone solo e
 function validar(datos) {
     if (typeof datos !== 'object') return false;
     for (let llave in datos) {
-        if (datos[llave].length === 0) return false;
+      if (datos[llave].lenght === 0) return false;
     }
     return true;
 }

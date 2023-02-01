@@ -1,8 +1,8 @@
 {
     "builds":[
         {
-            "src": "index.js",
-            "use": "@now/node"
+            "src": "./index.js",
+            "use": "@vercel/node"
         }
     ],
     "routes" :[
@@ -12,8 +12,8 @@
                "Access-Control-Allow-Methods": "OPTIONS,GET,PUT,DELETE,POST",
                 "Access-Control-Allow-Headers": "X-Requested-With, Content-Type, Accept"
             },
-            "src": "/.*",
-            "dest": "index.js"
+            "src": "/(.*)",
+            "dest": "/"
         }
     ]
 }

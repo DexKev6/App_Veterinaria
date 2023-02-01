@@ -45,7 +45,7 @@ async function listarConsultas() {
                         
                             <td>
                                  <div class="btn-group" role="group" aria-label="Basic example">
-                                    <button class="editar" type="button" class="btn btn-info">Editar</button>
+                                 <button type="button" class="btn btn-info editar" data-bs-toggle="modal" data-bs-target="#exampleModal">Editar</button>
                                 </div>
                         </td>
                     </tr>`
@@ -60,7 +60,7 @@ async function listarConsultas() {
 
     } catch (error) {
         console.log({ error });
-        $(".alert").show();
+        $(".alert-danger").show();
     }
 }
 
@@ -102,7 +102,7 @@ async function listarMascotas() {
 
     } catch (error) {
         console.log({ error });
-        $(".alert").show();
+        $(".aalert-danger").show();
     }
 }
 
@@ -131,19 +131,22 @@ async function listarVeterinarias() {
 
     } catch (error) {
         console.log({ error });
-        $(".alert").show();
+        $(".alert-danger").show();
     }
 }
 
 function resetModal() {
-
-    indice.value = "";
-    mascota.value = "";
-    veterinaria.value = "";
-    historia.value = "";
-    diagnostico.value = "";
     btnGuardar.innerHTML = 'Crear'
-   // $('#exampleModal').modal('toggle');
+
+    [  indice,mascota,veterinaria,historia,diagnostico].forEach((inputActual)=>{
+        inputActual.value="";
+        document.getElementsById(llave).classList.remove('is-invalid');
+    document.getElementsById(llave).classList.remove('is-valid');
+    })
+    
+    $('#exampleModal').modal('toggle');
+    $(".alert-warning").hide();
+  
 }
 
 
@@ -182,7 +185,7 @@ async function enviarDatos(evento) { //nomalmente se pone solo e
 
 
         };
-        if (validar(datos) === true) {
+       // if (validar(datos) === true) {
             const accion = btnGuardar.innerHTML;
             let urlEnvio = `${url}/${entidad}`
             let method = 'POST';
@@ -205,28 +208,41 @@ async function enviarDatos(evento) { //nomalmente se pone solo e
                 listarConsultas();
                 resetModal();
             }
+            formulario.classList.add('was-validated')
             return;
            
-        }
-        alert ("formulario incompleto")
+      //  }
+        //$(".alert-warning").show();
+      //  formulario.classList.add('was-validated')
   
     } catch (error) {
         console.log({ error });
-        $(".alert").show();
+        $(".alert-danger").show();
         //console.log({ error });
         //$(".alert").show();
     }
 }
 function validar(datos) {
-    if (typeof datos !== 'object') return false;
+    if (typeof datos !== "object") return false;
+    let respuesta = true;
     for (let llave in datos) {
-      if (datos[llave].lenght === 0) return false;
+      if (datos[llave].lenght === 0) {
+          document.getElementsById(llave).classList.add('is-invalid');
+          
+          //formulario.classList.add('was-validated')
+         respuesta = false;
+    }else{
+        document.getElementsById(llave).classList.remove('is-invalid');
+        document.getElementsById(llave).classList.add('is-valid');
     }
-    return true;
+
+    }
+    if(respuesta === true) $(".alert-warning").hide();
+    return respuesta;
 }
+
+btnGuardar.onclick = enviarDatos;
 
 listarVeterinarias();
 listarConsultas();
 listarMascotas();
-
-btnGuardar.onclick = enviarDatos;

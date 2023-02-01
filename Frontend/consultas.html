@@ -27,16 +27,16 @@
                 <div class="collapse navbar-collapse" id="navbarScroll">
                     <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="/Frontend/index.html">Mascotas</a>
+                            <a class="nav-link active" aria-current="page" href="/index.html">Mascotas</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/Frontend/veterinarios.html">Veterinarios</a>
+                            <a class="nav-link" href="/veterinarios.html">Veterinarios</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/Frontend/consultas.html">Consultas</a>
+                            <a class="nav-link" href="/consultas.html">Consultas</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/Frontend/duenos.html">Dueños</a>
+                            <a class="nav-link" href="/duenos.html">Dueños</a>
                         </li>
                         <!-- <li class="nav-item dropdown">
                       <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -74,6 +74,9 @@
                     <strong>Oops!</strong> Algo fallo, por favor volver a intentar.
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
+
+               
+                
             </div>
         </div>
 
@@ -106,17 +109,22 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h1 class="modal-title fs-5" id="exampleModalLabel">Nueva Consulta</h1>
+                        <div class="alert alert-warning alert-dismissible" role="alert">
+                            <strong>Ten cuidado!</strong> Faltan datos.
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
+
                         <!-- Form -->
-                        <form id="formulario" >
+                        <form class="row g-3 needs-validation" id="formulario"  >
                             <input type="hidden" id="indice" />
                             <div class="row">
                                 <div class="col">
                                     <label class="visually-hidden" for="specificSizeSelect">Preference</label>
                                     <select class="form-select" id="mascota">
-                                        <option selected>Tipo de animal</option>
+                                        <option selected value="">Tipo de animal</option>
 
                                     </select>
                                 </div>
@@ -125,7 +133,7 @@
                                 <div class="col">
                                     <label class="visually-hidden" for="specificSizeSelect">Preference</label>
                                     <select class="form-select" id="veterinaria">
-                                        <option selected>Selectione Veterinari@</option>
+                                        <option selected value="">Selectione Veterinari@</option>
 
                                     </select>
                                 </div>
@@ -139,7 +147,7 @@
                                     <div class="col">
                                         <label class="visually-hidden" for="specificSizeSelect">Preference</label>
                                         <select class="form-select" id="diagnostico">
-                                            <option selected>Selectione Diagnostico</option>
+                                            <option selected value="">Selectione Diagnostico</option>
                                             <option>Prudito de piel (sarna)</option>
                                             <option>Moquillo</option>
                                             <option>Trauma cefálico</option>

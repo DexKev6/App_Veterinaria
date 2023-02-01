@@ -10,7 +10,7 @@ let consultas = [];
 let mascotas = [];
 let veterinarias = [];
 
-const url = 'http://localhost:8000';
+const url = 'https://backend-ashen-ten.vercel.app';
 
 /*{
       mascota: 0,

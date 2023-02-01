@@ -8,7 +8,7 @@ const indice = document.getElementById('indice');
 const btnGuardar = document.getElementById('btn-guardar');
 //para evitar navegar al unidirle al input dentro de un formulario
 const form = document.getElementById('form');
-const url = 'http://localhost:8000/duenos';
+const url = 'https://backend-ashen-ten.vercel.app/duenos';
 
 let duenos = [];
 
